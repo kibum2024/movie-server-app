@@ -10,19 +10,24 @@ jobs:
     runs-on: ubuntu-latest  # GitHub Actions가 제공하는 Ubuntu 환경에서 실행됨
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
+    - name: Checkout source code
+      uses: actions/checkout@master
 
     - name: Set up Node.js
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@master
       with:
         node-version: '20'
 
     - name: Install dependencies
       run: npm install
 
-    - name: Build the project
+    - name: Test unit
+      run: npm run test:unit 
+      
+    - name: Build Page
       run: npm run build
+      env:
+          NODE_ENV: production
 
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
